@@ -1,9 +1,12 @@
 <script setup>
 
+
 </script>
 
 <template>
-  $END$
+  <header class="header">
+
+  </header>
 </template>
 
 <style scoped>

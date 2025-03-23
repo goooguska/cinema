@@ -5,6 +5,8 @@ services:
             dockerfile: docker/Dockerfile
         volumes:
             - .:/var/www/backend
+        ports:
+            - "9000:9000"
         networks:
             - app-network
 
