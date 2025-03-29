@@ -9,6 +9,7 @@
   --color-background: var(--primary-color);
   --color-primary-text: var(--secondary-color);
   --color-secondary-text: var(--primary-color);
+  --color-other-text: var(--gray-color);
 }
 
 body {
@@ -22,7 +23,10 @@ body {
 
 a {
   text-decoration: none;
+}
 
+ul {
+  list-style: none;
 }
 
 .button {

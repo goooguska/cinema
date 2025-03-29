@@ -2,6 +2,32 @@
 import AppLogo from "@/components/icons/AppLogo.vue";
 import DefaultButton from "@/components/DefaultButton.vue";
 import AccountIcon from "@/components/icons/AccountIcon.vue";
+import { ref } from 'vue';
+import BasePopup from "@/components/Auth/BasePopup.vue";
+import AuthForm from "@/components/Auth/AuthForm.vue";
+import RegisterForm from "@/components/Auth/RegisterForm.vue";
+
+const isAuthPopupVisible = ref(false);
+const isRegisterPopupVisible = ref(false);
+
+const openAuth = () => {
+  isAuthPopupVisible.value = true;
+}
+
+const closeAllPopups = () => {
+  isAuthPopupVisible.value = false;
+  isRegisterPopupVisible.value = false;
+}
+
+const switchToRegister = () => {
+  isAuthPopupVisible.value = false;
+  isRegisterPopupVisible.value = true;
+}
+
+const switchToAuth = () => {
+  isRegisterPopupVisible.value = false;
+  isAuthPopupVisible.value = true;
+}
 </script>
 
 <template>
@@ -27,10 +53,27 @@ import AccountIcon from "@/components/icons/AccountIcon.vue";
     </nav>
 
     <div class="header__account">
+      <RouterLink to="/schedule" class="header__account-link">
         <DefaultButton class="button header__account-button"> Купить билеты </DefaultButton>
+      </RouterLink>
+      <button class="header__account-btn" @click="openAuth">
         <AccountIcon/>
+      </button>
     </div>
   </header>
+  <BasePopup
+      v-if="isAuthPopupVisible"
+      @close="closeAllPopups"
+  >
+    <AuthForm @switch-to-register="switchToRegister" />
+  </BasePopup>
+
+  <BasePopup
+      v-if="isRegisterPopupVisible"
+      @close="closeAllPopups"
+  >
+    <RegisterForm @switch-to-auth="switchToAuth" />
+  </BasePopup>
 </template>
 
 <style scoped>
@@ -40,14 +83,9 @@ import AccountIcon from "@/components/icons/AccountIcon.vue";
   align-items: center;
 }
 
-.header__logo {
-  /* Стили элемента логотипа */
-}
-
 .header__nav {
   max-width: 370px;
   width: 100%;
-
 }
 
 .header__nav-list {
@@ -65,8 +103,16 @@ import AccountIcon from "@/components/icons/AccountIcon.vue";
   max-width: 225px;
   gap: 20px;
 }
-.header__account-button{
+
+.header__account-button {
   padding: 12px 30px;
   max-width: 180px;
+}
+
+.header__account-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 </style>
