@@ -29,6 +29,11 @@ ul {
   list-style: none;
 }
 
+h1 {
+  font-size: 36px;
+  color: var(--color-primary-text);
+}
+
 .button {
   background-color: var(--color-primary-text);
   border-radius: 6px;
