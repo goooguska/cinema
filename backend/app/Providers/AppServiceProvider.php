@@ -12,6 +12,7 @@ use App\Contracts\Repositories\ScreeningRepository as ScreeningRepositoryContrac
 use App\Contracts\Repositories\TicketRepository as TicketRepositoryContract;
 use App\Contracts\Repositories\UserRepository as UserRepositoryContract;
 use App\Contracts\Services\ActorService as ActorServiceContract;
+use App\Contracts\Services\Auth\JwtServiceContract;
 use App\Contracts\Services\CinemaService as CinemaServiceContract;
 use App\Contracts\Services\DirectorService as DirectorServiceContract;
 use App\Contracts\Services\GenreService as GenreServiceContract;
@@ -30,6 +31,7 @@ use App\Repositories\ScreeningRepository;
 use App\Repositories\TicketRepository;
 use App\Repositories\UserRepository;
 use App\Services\ActorService;
+use App\Services\Auth\JwtService;
 use App\Services\CinemaService;
 use App\Services\DirectorService;
 use App\Services\GenreService;
@@ -146,6 +148,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UserServiceContract::class,
             UserService::class
+        );
+
+        $this->app->bind(
+            JwtServiceContract::class,
+            JwtService::class
         );
     }
 }

@@ -6,11 +6,19 @@ import { ref } from 'vue';
 import BasePopup from "@/components/Auth/BasePopup.vue";
 import AuthForm from "@/components/Auth/AuthForm.vue";
 import RegisterForm from "@/components/Auth/RegisterForm.vue";
+import {useUserStore} from "@/stores/UserStore.js";
+import router from "@/router/index.js";
 
 const isAuthPopupVisible = ref(false);
 const isRegisterPopupVisible = ref(false);
 
+const userStore = useUserStore();
+
 const openAuth = () => {
+  if (userStore.getToken() !== null){
+    router.push('/account')
+    return
+  }
   isAuthPopupVisible.value = true;
 }
 
@@ -65,14 +73,20 @@ const switchToAuth = () => {
       v-if="isAuthPopupVisible"
       @close="closeAllPopups"
   >
-    <AuthForm @switch-to-register="switchToRegister" />
+    <AuthForm
+        @switch-to-register="switchToRegister"
+        @login-success="closeAllPopups"
+    />
   </BasePopup>
 
   <BasePopup
       v-if="isRegisterPopupVisible"
       @close="closeAllPopups"
   >
-    <RegisterForm @switch-to-auth="switchToAuth" />
+    <RegisterForm
+        @switch-to-auth="switchToAuth"
+        @register-success="closeAllPopups"
+    />
   </BasePopup>
 </template>
 

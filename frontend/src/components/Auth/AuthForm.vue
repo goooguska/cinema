@@ -11,9 +11,16 @@ const formData = reactive({
   password: '',
 });
 
-const loginUser = () => {
-  userStore.loginUser(formData)
-}
+const emit = defineEmits(['login-success', 'switch-to-register']);
+
+const loginUser = async () => {
+  try {
+    await userStore.loginUser(formData);
+    emit('login-success');
+  } catch (error) {
+    console.error("Login failed:", error);
+  }
+};
 </script>
 
 <template>

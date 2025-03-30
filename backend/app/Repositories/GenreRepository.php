@@ -2,11 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Contracts\Repositories\CinemaRepository as CinemaRepositoryContract;
-use App\Models\Cinema;
+use App\Contracts\Repositories\GenreRepository as GenreRepositoryContract;
 use App\Models\Genre;
 
-class GenreRepository extends BaseRepository implements CinemaRepositoryContract
+class GenreRepository extends BaseRepository implements GenreRepositoryContract
 {
     public function __construct(Genre $model)
     {

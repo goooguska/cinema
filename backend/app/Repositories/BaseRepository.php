@@ -9,7 +9,7 @@ abstract class BaseRepository
 {
     public function __construct(protected Model $model) {}
 
-    private function getModel(): Model
+    protected function getModel(): Model
     {
         return $this->model;
     }
@@ -19,7 +19,7 @@ abstract class BaseRepository
         return $this->getModel()->all();
     }
 
-    public function find(int $id): ?Model
+    public function findById(int $id): ?Model
     {
         return $this->getModel()->findOrFail($id);
     }
@@ -31,7 +31,7 @@ abstract class BaseRepository
 
     public function update(array $fields, int $id): Model
     {
-        $record = $this->find($id);
+        $record = $this->findById($id);
         $record->update($fields);
         return $record;
     }

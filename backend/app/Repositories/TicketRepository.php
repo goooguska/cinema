@@ -2,12 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Contracts\Repositories\CinemaRepository as CinemaRepositoryContract;
-use App\Models\Cinema;
-use App\Models\Movie;
+use App\Contracts\Repositories\TicketRepository as TicketRepositoryContract;
 use App\Models\Ticket;
 
-class TicketRepository extends BaseRepository implements CinemaRepositoryContract
+class TicketRepository extends BaseRepository implements
+    TicketRepositoryContract
 {
     public function __construct(Ticket $model)
     {

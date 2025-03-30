@@ -8,6 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+
         Schema::create('cinemas', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -111,8 +117,9 @@ return new class extends Migration
         Schema::dropIfExists('halls');
         Schema::dropIfExists('tickets');
         Schema::dropIfExists('screenings');
-
-
-
+        Schema::dropIfExists('movie_actors');
+        Schema::dropIfExists('movie_directors');
+        Schema::dropIfExists('movie_genres');
+        Schema::dropIfExists('roles');
     }
 };

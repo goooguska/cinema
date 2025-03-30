@@ -14,9 +14,17 @@ const formData = reactive({
 
 const userStore = useUserStore()
 
-const registrationNewUser = () => {
-  userStore.registrationNewUser(formData)
-}
+const emit = defineEmits(['register-success', 'switch-to-auth']);
+
+const registrationNewUser = async () => {
+  try {
+    await userStore.registrationNewUser(formData);
+    emit('register-success');
+  } catch (error) {
+    console.error("Registration failed:", error);
+  }
+};
+//TODO: Поставить placeholders
 </script>
 
 <template>

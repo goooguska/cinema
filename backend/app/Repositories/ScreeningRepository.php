@@ -2,12 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Contracts\Repositories\CinemaRepository as CinemaRepositoryContract;
-use App\Models\Cinema;
-use App\Models\Movie;
+use App\Contracts\Repositories\ScreeningRepository as ScreeningRepositoryContract;
 use App\Models\Screening;
 
-class ScreeningRepository extends BaseRepository implements CinemaRepositoryContract
+class ScreeningRepository extends BaseRepository implements ScreeningRepositoryContract
 {
     public function __construct(Screening $model)
     {
