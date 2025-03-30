@@ -13,8 +13,10 @@ onMounted(async () => {
 
 <template>
   <div class="app-container">
-    <div class="content-wrapper">
+    <div class="header-wrapper">
       <HeaderTemplate/>
+    </div>
+    <div class="content-wrapper">
       <MainTemplate/>
     </div>
     <div class="footer-wrapper">
@@ -24,7 +26,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.content-wrapper {
+.header-wrapper {
   max-width: 1440px;
   margin: 0 auto;
   padding: 2rem;
