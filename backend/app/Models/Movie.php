@@ -5,19 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Movie extends Model
 {
     use HasFactory;
 
-    protected $table = 'movie';
+    protected $table = 'movies';
 
     protected $fillable = [
         'title',
         'description',
         'format',
-        'duration'
+        'duration',
+        'poster_url',
+        'year',
+        'kp_id'
     ];
 
     public function screenings(): HasMany
@@ -25,18 +29,23 @@ class Movie extends Model
         return $this->hasMany(Screening::class);
     }
 
-    public function actors(): BelongsTo
+    public function actors(): BelongsToMany
     {
-        return $this->belongsTo(Actor::class);
+        return $this->belongsToMany(Actor::class, 'movie_actors');
     }
 
-    public function directors(): BelongsTo
+    public function directors(): BelongsToMany
     {
-        return $this->belongsTo(Director::class);
+        return $this->belongsToMany(Director::class, 'movie_directors');
     }
 
-    public function genres(): BelongsTo
+    public function genres(): BelongsToMany
     {
-        return $this->belongsTo(Genre::class);
+        return $this->belongsToMany(Genre::class, 'movie_genres');
+    }
+
+    public function countries(): BelongsToMany
+    {
+        return $this->belongsToMany(Country::class, 'movie_countries');
     }
 }

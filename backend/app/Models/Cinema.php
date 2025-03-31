@@ -10,7 +10,7 @@ class Cinema extends Model
 {
     use HasFactory;
 
-    protected $table = 'cinema';
+    protected $table = 'cinemas';
 
     protected $fillable = [
         'name',

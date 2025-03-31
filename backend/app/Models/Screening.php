@@ -11,7 +11,7 @@ class Screening extends Model
 {
     use HasFactory;
 
-    protected $table = 'screening';
+    protected $table = 'screenings';
 
     protected $fillable = [
         'hall_id',

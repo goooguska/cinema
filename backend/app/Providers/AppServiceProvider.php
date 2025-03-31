@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Contracts\Repositories\ActorRepository as ActorRepositoryContract;
 use App\Contracts\Repositories\CinemaRepository as CinemaRepositoryContract;
+use App\Contracts\Repositories\CountryRepository as CountryRepositoryContract;
 use App\Contracts\Repositories\DirectorRepository as DirectorRepositoryContract;
 use App\Contracts\Repositories\GenreRepository as GenreRepositoryContract;
 use App\Contracts\Repositories\HallRepository as HallRepositoryContract;
@@ -14,6 +15,7 @@ use App\Contracts\Repositories\UserRepository as UserRepositoryContract;
 use App\Contracts\Services\ActorService as ActorServiceContract;
 use App\Contracts\Services\Auth\JwtServiceContract;
 use App\Contracts\Services\CinemaService as CinemaServiceContract;
+use App\Contracts\Services\CountryService as CountryServiceContract;
 use App\Contracts\Services\DirectorService as DirectorServiceContract;
 use App\Contracts\Services\GenreService as GenreServiceContract;
 use App\Contracts\Services\HallService as HallServiceContract;
@@ -21,8 +23,10 @@ use App\Contracts\Services\MovieService as MovieServiceContract;
 use App\Contracts\Services\ScreeningService as ScreeningServiceContract;
 use App\Contracts\Services\TicketService as TicketServiceContract;
 use App\Contracts\Services\UserService as UserServiceContract;
+use App\Http\Clients\MovieApiClient;
 use App\Repositories\ActorRepository;
 use App\Repositories\CinemaRepository;
+use App\Repositories\CountryRepository;
 use App\Repositories\DirectorRepository;
 use App\Repositories\GenreRepository;
 use App\Repositories\HallRepository;
@@ -33,6 +37,7 @@ use App\Repositories\UserRepository;
 use App\Services\ActorService;
 use App\Services\Auth\JwtService;
 use App\Services\CinemaService;
+use App\Services\CountryService;
 use App\Services\DirectorService;
 use App\Services\GenreService;
 use App\Services\HallService;
@@ -48,6 +53,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->registerRepositories();
         $this->registerServices();
+        $this->registerClients();
     }
 
     public function boot(): void
@@ -101,6 +107,11 @@ class AppServiceProvider extends ServiceProvider
             UserRepositoryContract::class,
             UserRepository::class
         );
+
+        $this->app->bind(
+            CountryRepositoryContract::class,
+            CountryRepository::class
+        );
     }
 
     private function registerServices(): void
@@ -151,8 +162,18 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            CountryServiceContract::class,
+            CountryService::class
+        );
+
+        $this->app->bind(
             JwtServiceContract::class,
             JwtService::class
         );
+    }
+
+    private function registerClients(): void
+    {
+        $this->app->singleton(MovieApiClient::class);
     }
 }

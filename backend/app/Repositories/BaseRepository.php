@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Contracts\Repositories\BaseRepository as BaseRepositoryContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-abstract class BaseRepository
+abstract class BaseRepository implements BaseRepositoryContract
 {
     public function __construct(protected Model $model) {}
 
@@ -34,6 +35,11 @@ abstract class BaseRepository
         $record = $this->findById($id);
         $record->update($fields);
         return $record;
+    }
+
+    public function updateOrCreate(array $fields, array $values = []): Model
+    {
+        return $this->model->updateOrCreate($fields, $values);
     }
 
     public function delete(int $id): bool

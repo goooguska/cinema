@@ -23,28 +23,36 @@ return new class extends Migration
 
         Schema::create('actors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
 
         Schema::create('directors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
 
         Schema::create('genres', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
+
+        Schema::create('countries', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
             $table->timestamps();
         });
 
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->enum('format', ['3D', '2D', 'IMAX']);
-            $table->integer('duration');
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
+            $table->unsignedInteger('duration')->nullable();
+            $table->string('poster_url')->nullable();
+            $table->integer('year')->nullable();
+            $table->bigInteger('kp_id')->unique()->nullable();
             $table->timestamps();
         });
 
@@ -105,6 +113,13 @@ return new class extends Migration
             $table->foreignId('genre_id');
             $table->primary(['movie_id', 'genre_id']);
         });
+
+        Schema::create('movie_countries', function (Blueprint $table) {
+            $table->foreignId('movie_id');
+            $table->foreignId('country_id');
+            $table->primary(['movie_id', 'country_id']);
+        });
+
     }
 
     public function down(): void
@@ -120,6 +135,9 @@ return new class extends Migration
         Schema::dropIfExists('movie_actors');
         Schema::dropIfExists('movie_directors');
         Schema::dropIfExists('movie_genres');
+        Schema::dropIfExists('movie_countries');
         Schema::dropIfExists('roles');
+        Schema::dropIfExists('countries');
+
     }
 };
