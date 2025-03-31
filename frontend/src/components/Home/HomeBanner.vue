@@ -4,10 +4,12 @@
 
 <template>
   <div class="banner">
-    <div class="content">
-      <h2 class="title">Сейчас в кино</h2>
-      <p class="subtitle">Посмотрите новейшие блокбастеры в премиальном качестве</p>
-      <RouterLink to="/movies" class="btn">Смотреть</RouterLink>
+    <div class="wrapper">
+      <div class="content">
+        <h2 class="title">Сейчас в кино</h2>
+        <p class="subtitle">Посмотрите новейшие блокбастеры в премиальном качестве</p>
+        <RouterLink to="/movies" class="btn">Смотреть</RouterLink>
+      </div>
     </div>
   </div>
 </template>
@@ -18,15 +20,23 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100%;
-  min-height: 600px;
+  height: 100vh;
   position: relative;
   display: flex;
   align-items: center;
+  margin: 0;
+}
+
+.wrapper {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .content {
-  margin-left: 85px;
   max-width: 440px;
   width: 100%;
   background: rgba(0, 0, 0, 0.2);

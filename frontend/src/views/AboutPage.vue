@@ -23,6 +23,7 @@
 .about {
   display: flex;
   justify-content: space-between;
+  padding: 2rem;
 }
 
 .about__content {

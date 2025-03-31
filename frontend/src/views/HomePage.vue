@@ -11,9 +11,8 @@ import HomeBanner from "@/components/Home/HomeBanner.vue";
 </template>
 
 <style scoped>
-.home{
+.home {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 2rem;
 }
 </style>

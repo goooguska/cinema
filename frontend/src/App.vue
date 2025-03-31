@@ -31,7 +31,6 @@ onMounted(async () => {
   margin: 0 auto;
   padding: 2rem;
 }
-
 .footer-wrapper {
   background-color: var(--color-primary-text);
 }
