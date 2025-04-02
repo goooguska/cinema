@@ -17,12 +17,27 @@ class Hall extends Model
         'number',
     ];
 
+    protected $casts = [
+        'capacity' => 'integer',
+    ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            if ($model->capacity > 60) {
+                throw new \Exception("Capacity cannot exceed 60 seats");
+            }
+        });
+    }
+
     public function cinema(): BelongsTo
     {
         return $this->belongsTo(Cinema::class);
     }
 
-    public function screening(): HasMany
+    public function screenings(): HasMany
     {
         return $this->hasMany(Screening::class);
     }

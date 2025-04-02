@@ -59,9 +59,11 @@ return new class extends Migration
         Schema::create('halls', function (Blueprint $table) {
             $table->id();
             $table->integer('number');
-            $table->integer('capacity');
+            $table->unsignedSmallInteger('capacity')->default(60);;
             $table->foreignId('cinema_id');
             $table->timestamps();
+
+            $table->unique(['cinema_id', 'number']);
         });
 
         Schema::create('screenings', function (Blueprint $table) {
@@ -76,7 +78,7 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->decimal('price');
-            $table->string('seat_number');
+            $table->unsignedSmallInteger('seat_number');
             $table->enum('status', ['active', 'canceled', 'reserved'])->default('active');
 
             $table->foreignId('screening_id')
