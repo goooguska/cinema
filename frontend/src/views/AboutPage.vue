@@ -1,7 +1,11 @@
+<script setup lang="ts">
+import BaseTitle from "@/components/UI/BaseTitle.vue";
+</script>
+
 <template>
   <div class="about">
     <div class="about__content">
-      <h1 class="about-title">О Нас</h1>
+      <BaseTitle>О Нас</BaseTitle>
       <div class="about__text-container">
         <p class="about__subtitle">Мы молодая сеть кинотеатров, которая старается завоевать доверие клиентов.</p>
         <p class="about__text">
@@ -22,8 +26,10 @@
 <style scoped>
 .about {
   display: flex;
+  margin: 0 auto;
   justify-content: space-between;
   padding: 2rem;
+  max-width: 1440px;
 }
 
 .about__content {

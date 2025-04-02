@@ -1,6 +1,6 @@
 <script setup>
 import AppLogo from "@/components/icons/AppLogo.vue";
-import DefaultButton from "@/components/DefaultButton.vue";
+import DefaultButton from "@/components/UI/DefaultButton.vue";
 import AccountIcon from "@/components/icons/AccountIcon.vue";
 import { ref } from 'vue';
 import BasePopup from "@/components/Auth/BasePopup.vue";

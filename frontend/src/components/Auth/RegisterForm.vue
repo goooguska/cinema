@@ -1,7 +1,7 @@
 <script setup>
 import { reactive } from 'vue';
 import FormInput from "@/components/Auth/FormInput.vue";
-import DefaultButton from "@/components/DefaultButton.vue";
+import DefaultButton from "@/components/UI/DefaultButton.vue";
 import {useUserStore} from "@/stores/UserStore.js";
 
 const formData = reactive({

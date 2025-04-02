@@ -10,7 +10,6 @@
 
 <style scoped>
 .main {
-  margin-top: 60px;
   margin-bottom: 60px;
 }
 </style>
