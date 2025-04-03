@@ -11,9 +11,7 @@ import AllMovies from "@/components/Movies/AllMovies.vue";
 
 <style scoped>
 .movies {
-  display: flex;
   margin: 0 auto;
-  justify-content: space-between;
   padding: 2rem;
   max-width: 1440px;
 }

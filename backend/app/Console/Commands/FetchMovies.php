@@ -10,7 +10,7 @@ class FetchMovies extends Command
 {
     protected $signature = 'app:fetch-movies
         {--pages=5 : Number of pages to fetch}
-        {--per-page=50 : Items per page}';
+        {--per-page=15 : Items per page}';
 
     protected $description = 'Fetch movies from API';
 

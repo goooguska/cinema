@@ -6,6 +6,7 @@ use App\Contracts\Repositories\MovieRepository;
 use App\Contracts\Services\MovieService as MovieServiceContract;
 use App\Http\Clients\MovieApiClient;
 use App\Models\Movie;
+use Illuminate\Support\Collection;
 
 class MovieService implements MovieServiceContract
 {
@@ -13,6 +14,11 @@ class MovieService implements MovieServiceContract
         private readonly MovieRepository $movieRepository,
         private readonly MovieApiClient $movieApiClient,
     ) {}
+
+    public function getMovies(): Collection
+    {
+       return $this->movieRepository->getMovies();
+    }
 
     public function fetchMovies(int $page = 1, int $limit = 50): array
     {

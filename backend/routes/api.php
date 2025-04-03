@@ -18,6 +18,10 @@ $router->group(['prefix' => 'auth', 'namespace' => 'App\Http\Controllers\Api'], 
     $router->get('me', 'AuthController@me');
 });
 
+$router->group(['prefix' => 'movies', 'namespace' => 'App\Http\Controllers\Api\Movie'], function (Router $router) {
+    $router->get('/', 'ListController@allMovies');
+});
+
 
 
 Route::get('/test', function() {

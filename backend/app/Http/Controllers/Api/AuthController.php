@@ -6,7 +6,6 @@ use App\Contracts\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CreateUserRequest;
 use App\Http\Requests\Auth\LoginUserRequest;
-use App\Models\User;
 use DomainException;
 use Illuminate\Http\JsonResponse;
 use Throwable;
