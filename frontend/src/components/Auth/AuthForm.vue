@@ -3,9 +3,10 @@ import {reactive, ref} from 'vue';
 import FormInput from "@/components/Auth/FormInput.vue";
 import DefaultButton from "@/components/UI/DefaultButton.vue";
 import {useUserStore} from "@/stores/UserStore.js";
+import ErrorPopup from "@/components/Error/ErrorPopup.vue";
 
 const userStore = useUserStore();
-
+const errors = ref([])
 const formData = reactive({
   email: '',
   password: '',
@@ -18,17 +19,26 @@ const loginUser = async () => {
     await userStore.loginUser(formData);
     emit('login-success');
   } catch (error) {
-    console.error("Login failed:", error);
+    if (error.response?.data?.errors) {
+      errors.value = Object.values(error.response.data.errors).flat();
+    } else {
+      errors.value = [error.message || 'Произошла неизвестная ошибка'];
+    }
   }
 };
 </script>
 
 <template>
   <div>
+    <ErrorPopup
+        v-if="errors.length"
+        :errors="errors"
+        @close="errors = []"
+    />
     <h2 class="auth-popup__title">Вход или регистрация</h2>
     <div class="auth-popup__form">
-      <FormInput label="Email" type="email" v-model="formData.email" />
-      <FormInput label="Пароль" type="password" v-model="formData.password" />
+      <FormInput label="Email" type="email" placeholder="Введите email" v-model="formData.email" />
+      <FormInput label="Пароль" type="password" placeholder="Введите пароль" v-model="formData.password" />
       <DefaultButton @click="loginUser" class="auth-popup__next button">Продолжить</DefaultButton>
     </div>
     <div class="auth-popup__footer">

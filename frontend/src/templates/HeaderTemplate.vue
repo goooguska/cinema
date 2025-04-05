@@ -2,20 +2,22 @@
 import AppLogo from "@/components/icons/AppLogo.vue";
 import DefaultButton from "@/components/UI/DefaultButton.vue";
 import AccountIcon from "@/components/icons/AccountIcon.vue";
-import { ref } from 'vue';
+import { ref, watch} from 'vue';
 import BasePopup from "@/components/Auth/BasePopup.vue";
 import AuthForm from "@/components/Auth/AuthForm.vue";
 import RegisterForm from "@/components/Auth/RegisterForm.vue";
 import {useUserStore} from "@/stores/UserStore.js";
 import router from "@/router/index.js";
+import LogoutIcon from "@/components/icons/LogoutIcon.vue";
 
 const isAuthPopupVisible = ref(false);
 const isRegisterPopupVisible = ref(false);
 
 const userStore = useUserStore();
+const isAccountPage = ref(false)
 
 const openAuth = () => {
-  if (userStore.getToken() !== null){
+  if (userStore.isAuth()){
     router.push('/account')
     return
   }
@@ -36,6 +38,11 @@ const switchToAuth = () => {
   isRegisterPopupVisible.value = false;
   isAuthPopupVisible.value = true;
 }
+
+watch(() => router.currentRoute.value.name, (newVal) => {
+  isAccountPage.value = newVal === 'Account';
+});
+
 </script>
 
 <template>
@@ -65,7 +72,8 @@ const switchToAuth = () => {
         <DefaultButton class="button header__account-button"> Купить билеты </DefaultButton>
       </RouterLink>
       <button class="header__account-btn" @click="openAuth">
-        <AccountIcon/>
+        <AccountIcon v-if="!isAccountPage"/>
+        <LogoutIcon v-else @click="userStore.logout"/>
       </button>
     </div>
   </header>

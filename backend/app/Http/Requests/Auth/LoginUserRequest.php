@@ -30,4 +30,19 @@ class LoginUserRequest extends FormRequest
             ],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Поле email обязательно для заполнения',
+            'email.email' => 'Введите корректный email адрес',
+            'email.max' => 'Email не должен превышать 255 символов',
+            'email.exists' => 'Пользователь с таким email не найден',
+
+            'password.required' => 'Поле пароль обязательно для заполнения',
+            'password.min' => 'Пароль должен быть не менее 6 символов',
+            'password.max' => 'Пароль не должен превышать 150 символов',
+            'password.regex' => 'Пароль должен содержать минимум: 1 заглавную букву, 1 цифру и 1 спецсимвол',
+        ];
+    }
 }

@@ -1,13 +1,24 @@
 <script setup>
-import {onMounted} from "vue";
 import HeaderTemplate from "@/templates/HeaderTemplate.vue";
 import MainTemplate from "@/templates/MainTemplate.vue";
 import FooterTemplate from "@/templates/FooterTemplate.vue";
+import {onMounted} from "vue";
+import {useUserStore} from "@/stores/UserStore.js";
+import router from "@/router/index.js";
+
+const userStore = useUserStore()
 
 onMounted(async () => {
-  const res = await fetch('/api/v1/test')
-  console.log(res);
-})
+  try {
+    if (!userStore.isAuth()) {
+      await userStore.logout();
+      await router.push('/');
+    }
+  } catch (error) {
+    console.error('Auth check error:', error);
+    await router.push('/');
+  }
+});
 
 </script>
 

@@ -6,7 +6,7 @@ import CloseButton from "@/components/Auth/CloseButton.vue";
   <div class="auth-popup" @click.self="$emit('close')">
     <div class="auth-popup__content">
       <CloseButton @click="$emit('close')" />
-      <slot></slot>
+      <slot/>
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@ import CloseButton from "@/components/Auth/CloseButton.vue";
 
 .auth-popup__content {
   position: relative;
-  background: white;
+  background: var(--color-background);
   padding: 40px 32px 32px;
   border-radius: 16px;
   width: 100%;

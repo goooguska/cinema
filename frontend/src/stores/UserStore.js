@@ -15,7 +15,12 @@ export const useUserStore = defineStore('userStore', () => {
       await router.push('/')
 
     } catch (error) {
-      console.log(error)
+      let message = 'Ошибка авторизации';
+      if (error.response?.data?.errors) {
+        message = Object.values(error.response.data.errors).flat().join('\n');
+      }
+
+      throw new Error(message);
     }
   }
 
@@ -32,27 +37,56 @@ export const useUserStore = defineStore('userStore', () => {
       localStorage.setItem("access_token", data.access_token);
       await router.push('/')
     } catch (error) {
-      console.log(error)
+      let message = 'Ошибка регистрации';
+      if (error.response?.data?.errors) {
+        message = Object.values(error.response.data.errors).flat().join('\n');
+      }
+
+      throw new Error(message);
     }
   }
 
   const logout = async () => {
     try {
       const token = getToken();
-      const { data } = await axios.post("/api/v1/auth/logout", {
+      const { data } = await axios.delete("/api/v1/auth/logout", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       localStorage.removeItem("access_token");
+      await router.push('/')
+
+      return data
     } catch (error) {
       console.log(error)
     }
   };
 
-  const getToken = () => {
-      return localStorage.getItem("access_token");
-  }
+  const getToken = () => localStorage.getItem("access_token");
 
-  return { loginUser, registrationNewUser, getToken  }
+  const isAuth = () => {
+    const token = getToken();
+
+    if (!token || token.trim() === '') {
+      return false;
+    }
+
+    try {
+      const payloadEncoded = token.split('.')[1];
+      const payload = JSON.parse(atob(payloadEncoded));
+
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (payload.exp && payload.exp < currentTime) {
+        return false;
+      }
+    } catch (e) {
+      console.error("Ошибка при декодировании JWT:", e);
+      return false;
+    }
+
+    return true;
+  };
+
+  return { loginUser, registrationNewUser, getToken, isAuth, logout  }
 })

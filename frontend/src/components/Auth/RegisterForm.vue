@@ -1,8 +1,9 @@
 <script setup>
-import { reactive } from 'vue';
+import {reactive, ref} from 'vue';
 import FormInput from "@/components/Auth/FormInput.vue";
 import DefaultButton from "@/components/UI/DefaultButton.vue";
 import {useUserStore} from "@/stores/UserStore.js";
+import ErrorPopup from "@/components/Error/ErrorPopup.vue";
 
 const formData = reactive({
   name: '',
@@ -13,6 +14,7 @@ const formData = reactive({
 });
 
 const userStore = useUserStore()
+const errors = ref([])
 
 const emit = defineEmits(['register-success', 'switch-to-auth']);
 
@@ -21,23 +23,32 @@ const registrationNewUser = async () => {
     await userStore.registrationNewUser(formData);
     emit('register-success');
   } catch (error) {
-    console.error("Registration failed:", error);
+    if (error.response?.data?.errors) {
+      errors.value = Object.values(error.response.data.errors).flat();
+    } else {
+      errors.value = [error.message || 'Произошла неизвестная ошибка'];
+    }
   }
 };
-//TODO: Поставить placeholders
 </script>
 
 <template>
   <div>
+    <ErrorPopup
+        v-if="errors.length"
+        :errors="errors"
+        @close="errors = []"
+    />
     <h2 class="reg-popup__title">Регистрация</h2>
     <div class="reg-popup__form">
-      <FormInput label="Имя" type="text" v-model="formData.name" />
-      <FormInput label="Номер телефона" type="tel" v-model="formData.phone" />
-      <FormInput label="Email" type="email" v-model="formData.email" />
-      <FormInput label="Пароль" type="password" v-model="formData.password" />
+      <FormInput label="Имя" type="text" placeholder="Введите имя" v-model="formData.name" />
+      <FormInput label="Номер телефона" type="tel" placeholder="Введите номер телефона" v-model="formData.phone" />
+      <FormInput label="Email" type="email" placeholder="Введите email" v-model="formData.email" />
+      <FormInput label="Пароль" type="password" placeholder="Введите пароль" v-model="formData.password" />
       <FormInput
           label="Подтвердите пароль"
           type="password"
+          placeholder="Введите повторно пароль"
           v-model="formData.confirmPassword"
       />
       <DefaultButton @click="registrationNewUser()" class="reg-popup__form-btn button">Регистрация</DefaultButton>
