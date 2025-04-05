@@ -6,7 +6,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   const loginUser = async (fields) => {
     try {
-      const { data } = await axios.post("api/v1/auth/login", {
+      const { data } = await axios.post("/api/v1/auth/login", {
         email: fields.email,
         password: fields.password
       })
@@ -21,7 +21,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   const registrationNewUser = async (fields) => {
     try {
-      const { data } = await axios.post("api/v1/auth/register", {
+      const { data } = await axios.post("/api/v1/auth/register", {
         name: fields.name,
         phone: fields.phone,
         email: fields.email,
@@ -39,7 +39,7 @@ export const useUserStore = defineStore('userStore', () => {
   const logout = async () => {
     try {
       const token = getToken();
-      const { data } = await axios.post("api/v1/auth/logout", {
+      const { data } = await axios.post("/api/v1/auth/logout", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

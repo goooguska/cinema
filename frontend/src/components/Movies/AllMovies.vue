@@ -3,17 +3,11 @@ import BaseTitle from "@/components/UI/BaseTitle.vue";
 import BaseLoader from "@/components/UI/BaseLoader.vue";
 import { onMounted, ref } from "vue";
 import { useMovieStore } from "@/stores/MovieStore.js";
-import { useRouter } from "vue-router";
 import DefaultButton from "@/components/UI/DefaultButton.vue";
 
-const router = useRouter();
 const movieStore = useMovieStore();
 const movies = ref([]);
 const isLoading = ref(true);
-
-const handleMovieClick = (movieId) => {
-  router.push({ name: 'MovieDetail', params: { id: movieId } });
-};
 
 onMounted(async () => {
   try {
@@ -44,7 +38,7 @@ onMounted(async () => {
         />
 
         <div class="card-body">
-          <span class="card-title">{{ movie.title }}</span>
+          <span class="card-title">{{ movie.title ?? 'Нет названия'}}</span>
 
           <div class="movie-info">
             <div class="genres">
@@ -57,13 +51,11 @@ onMounted(async () => {
               </span>
             </div>
           </div>
-
-          <DefaultButton
-              class="watch-button button"
-              @click="handleMovieClick(movie.id)"
-          >
-            Смотреть
-          </DefaultButton>
+          <RouterLink :to="`/movies/${movie.id}`">
+            <DefaultButton class="watch-button button">
+              Смотреть
+            </DefaultButton>
+          </RouterLink>
         </div>
       </div>
     </div>

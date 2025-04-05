@@ -9,6 +9,8 @@ interface MovieService
 {
     public function getMovies(): Collection;
 
+    public function getMovieById(int $id): array;
+
     public function createMovie(array $fields): Movie;
 
     public function updateOrCreate(array $fields, array $values = []);

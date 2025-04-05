@@ -20,6 +20,11 @@ class MovieService implements MovieServiceContract
        return $this->movieRepository->getMovies();
     }
 
+    public function getMovieById(int $id): array
+    {
+        return $this->movieRepository->findMovieById($id)->toArray();
+    }
+
     public function fetchMovies(int $page = 1, int $limit = 50): array
     {
         return $this->movieApiClient->fetchMovies($page, $limit);

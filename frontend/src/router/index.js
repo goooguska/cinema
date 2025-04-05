@@ -4,6 +4,7 @@ import AboutPage from '@/views/AboutPage.vue'
 import MoviesPage from "@/views/MoviesPage.vue";
 import SchedulePage from "@/views/SchedulePage.vue";
 import AccountPage from "@/views/AccountPage.vue";
+import DetailMovie from "@/components/Movies/DetailMovie.vue";
 
 const routes = [
     {
@@ -30,6 +31,12 @@ const routes = [
         path: '/account',
         name: 'Account',
         component: AccountPage
+    },
+    {
+        path: '/movies/:id',
+        name: 'DetailMovie',
+        component: DetailMovie,
+        props: true
     }
 ]
 

@@ -6,6 +6,11 @@ use App\Contracts\Repositories\BaseRepository as BaseRepositoryContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
+
+
+/**
+ * @template TModel of Model
+ */
 abstract class BaseRepository implements BaseRepositoryContract
 {
     public function __construct(protected Model $model) {}
@@ -20,6 +25,9 @@ abstract class BaseRepository implements BaseRepositoryContract
         return $this->getModel()->all();
     }
 
+    /**
+     * @return TModel
+     */
     public function findById(int $id): ?Model
     {
         return $this->getModel()->findOrFail($id);
