@@ -41,4 +41,21 @@ class Hall extends Model
     {
         return $this->hasMany(Screening::class);
     }
+
+    public function getSeatMap()
+    {
+        $capacity = $this->capacity;
+        $rows = ceil($capacity / 10);
+        $seatsPerRow = 10;
+
+        $allSeats = [];
+        for ($row = 1; $row <= $rows; $row++) {
+            for ($seat = 1; $seat <= $seatsPerRow; $seat++) {
+                if (($row-1)*10 + $seat > $capacity) break;
+                $allSeats[] = "{$row}-{$seat}";
+            }
+        }
+        return $allSeats;
+    }
+
 }

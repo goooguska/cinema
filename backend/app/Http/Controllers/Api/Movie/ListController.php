@@ -13,7 +13,9 @@ class ListController extends Controller
 
     public function allMovies()
     {
-        return $this->movieService->getMovies();
+        $movies = $this->movieService->getMovies()->toArray();
+
+        return MoviePresenter::make($movies);
     }
 
     public function getDailyMovies(DailyMovieRequest $request)

@@ -1,9 +1,9 @@
 <script setup>
 import AppLogo from "@/components/icons/AppLogo.vue";
-import DefaultButton from "@/components/UI/DefaultButton.vue";
+import DefaultButton from "@/components/BaseComponents/DefaultButton.vue";
 import AccountIcon from "@/components/icons/AccountIcon.vue";
 import { ref, watch} from 'vue';
-import BasePopup from "@/components/Auth/BasePopup.vue";
+import BasePopup from "@/components/BaseComponents/BasePopup.vue";
 import AuthForm from "@/components/Auth/AuthForm.vue";
 import RegisterForm from "@/components/Auth/RegisterForm.vue";
 import {useUserStore} from "@/stores/UserStore.js";

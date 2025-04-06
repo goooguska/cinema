@@ -53,7 +53,7 @@ class MoviePresenter
                 'end_time' => $screening['end_time'],
                 'hall' => $this->formatHall($screening['hall'] ?? []),
                 'cinema' => $this->formatCinema($screening['hall']['cinema'] ?? []),
-                'price' => $screening['price'] ?? 0,
+                'price' => intval($screening['price']) ?? 0,
             ],
             $movie['screenings'] ?? []
         );

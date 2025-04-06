@@ -78,9 +78,4 @@ const points = [
   line-height: 1.5;
 }
 
-@media (max-width: 768px) {
-  .preferences {
-    grid-template-columns: 1fr;
-  }
-}
 </style>

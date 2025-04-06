@@ -1,5 +1,5 @@
 <script setup>
-import BasePopup from "@/components/Auth/BasePopup.vue";
+import BasePopup from "@/components/BaseComponents/BasePopup.vue";
 
 defineProps({
   errors: {

@@ -20,6 +20,7 @@ class ScreeningSeeder extends Seeder
 
                 $hall->screenings()->create([
                     'movie_id' => $movie->id,
+                    'price' => rand(300, 1000),
                     'start_time' => $start,
                     'end_time' => $start->copy()->addMinutes($movie->duration + 30)
                 ]);

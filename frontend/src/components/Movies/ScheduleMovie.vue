@@ -1,5 +1,9 @@
 <script setup>
-import { computed } from 'vue';
+import {computed, ref} from 'vue';
+import BasePopup from "@/components/BaseComponents/BasePopup.vue";
+import SeatSelection from "@/components/Ticket/SeatSelection.vue";
+import {useUserStore} from "@/stores/UserStore.js";
+import AuthWarningPopup from "@/components/BaseComponents/AuthWarningPopup.vue";
 
 const props = defineProps({
   movie: {
@@ -7,6 +11,43 @@ const props = defineProps({
     required: true
   }
 });
+
+const userStore = useUserStore();
+
+const isSeatsPopupVisible = ref(false);
+const isAuthWarningVisible = ref(false);
+
+const selectedScreening = ref(null);
+const selectedGroup = ref(null)
+
+
+const openSeats = (screening, group) => {
+  if (userStore.isAuth()) {
+    selectedScreening.value = screening;
+    selectedGroup.value = group;
+    isSeatsPopupVisible.value = true;
+  } else {
+    showAuthWarning();
+  }
+};
+
+const showAuthWarning = () => {
+  isAuthWarningVisible.value = true;
+};
+
+const closeSeatsPopup = () => {
+  isSeatsPopupVisible.value = false;
+  selectedScreening.value = null;
+  selectedGroup.value = null;
+};
+
+const closeAuthWarning = () => {
+  isAuthWarningVisible.value = false;
+};
+
+const navigateToAuth = () => {
+  closeAuthWarning();
+};
 
 const getTodayDate = () => {
   const today = new Date();
@@ -31,8 +72,9 @@ const groupedScreenings = computed(() => {
     }
 
     acc[cinema.id].screenings.push({
+      id: screening.id,
       time: formatTime(screening.start_time),
-      rawTime: new Date(screening.start_time), // Добавляем исходное время для сортировки
+      rawTime: new Date(screening.start_time),
       price: screening.price > 0 ? `От ${screening.price} ₽` : 'Бесплатно',
       hall: `Зал ${screening.hall.number}`
     });
@@ -78,6 +120,7 @@ const formatAddress = (address) => {
             v-for="(screening, index) in group.screenings"
             :key="index"
             class="screening-card"
+            @click="openSeats(screening, group)"
         >
           <div class="screening-time">{{ screening.time }}</div>
           <div class="screening-price">{{ screening.price }}</div>
@@ -85,6 +128,26 @@ const formatAddress = (address) => {
         </div>
       </div>
     </div>
+    <BasePopup
+        v-if="isSeatsPopupVisible"
+        @close="closeSeatsPopup"
+    >
+      <SeatSelection
+          v-if="isSeatsPopupVisible"
+          :movie="movie"
+          :screening="selectedScreening"
+          :group="selectedGroup"
+      />
+    </BasePopup>
+    <BasePopup
+        v-if="isAuthWarningVisible"
+        @close="closeAuthWarning"
+    >
+      <AuthWarningPopup
+          @confirm="navigateToAuth"
+          @cancel="closeAuthWarning"
+      />
+    </BasePopup>
   </div>
 </template>
 

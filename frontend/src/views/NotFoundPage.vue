@@ -1,6 +1,6 @@
 <script setup>
-import BaseTitle from "@/components/UI/BaseTitle.vue";
-import DefaultButton from "@/components/UI/DefaultButton.vue";
+import BaseTitle from "@/components/BaseComponents/BaseTitle.vue";
+import DefaultButton from "@/components/BaseComponents/DefaultButton.vue";
 import router from "@/router/index.js";
 
 const goBack = () => {

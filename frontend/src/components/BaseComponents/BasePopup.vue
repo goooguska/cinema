@@ -1,5 +1,5 @@
 <script setup>
-import CloseButton from "@/components/Auth/CloseButton.vue";
+import CloseButton from "@/components/BaseComponents/CloseButton.vue";
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup>
 import {reactive, ref} from 'vue';
 import FormInput from "@/components/Auth/FormInput.vue";
-import DefaultButton from "@/components/UI/DefaultButton.vue";
+import DefaultButton from "@/components/BaseComponents/DefaultButton.vue";
 import {useUserStore} from "@/stores/UserStore.js";
 import ErrorPopup from "@/components/Error/ErrorPopup.vue";
 

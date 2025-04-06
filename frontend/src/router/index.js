@@ -67,7 +67,7 @@ axios.interceptors.response.use(
 router.beforeEach((to, from, next) => {
     const userStore = useUserStore()
 
-    if (to.matched.length === 0) {
+    if (!to.matched.length) {
         next({ name: 'NotFound' })
         return
     }

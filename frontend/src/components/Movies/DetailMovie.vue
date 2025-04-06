@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {useMovieStore} from "@/stores/MovieStore.js";
-import BaseTitle from "@/components/UI/BaseTitle.vue";
+import BaseTitle from "@/components/BaseComponents/BaseTitle.vue";
 import ScheduleMovie from "@/components/Movies/ScheduleMovie.vue";
 const props = defineProps({
   id: String

@@ -23,8 +23,14 @@ $router->group(['prefix' => 'movies', 'namespace' => 'App\Http\Controllers\Api\M
     $router->get('/{id}', 'DetailController@getMovie');
 });
 
+$router->group(['prefix' => 'screenings', 'namespace' => 'App\Http\Controllers\Api\Screening'], function (Router $router) {
+    $router->get('/{screening}/seats', 'ListController@getSeatInfo');
+});
 
+$router->group(['prefix' => 'bookings', 'namespace' => 'App\Http\Controllers\Api'], function (Router $router) {
+    $router->post('/', 'BookingController@store');
+});
 
-Route::get('/test', function() {
-    echo 1 . PHP_EOL;
+$router->group(['prefix' => 'tickets', 'namespace' => 'App\Http\Controllers\Api\Ticket'], function (Router $router) {
+    $router->get('/', 'TicketController@getTicketsByUserId');
 });

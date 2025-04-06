@@ -68,6 +68,7 @@ return new class extends Migration
 
         Schema::create('screenings', function (Blueprint $table) {
             $table->id();
+            $table->decimal('price');
             $table->foreignId('hall_id');
             $table->foreignId('movie_id');
             $table->dateTime('start_time');
@@ -77,7 +78,6 @@ return new class extends Migration
 
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price');
             $table->unsignedSmallInteger('seat_number');
             $table->enum('status', ['active', 'canceled', 'reserved'])->default('active');
 

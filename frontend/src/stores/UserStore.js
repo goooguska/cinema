@@ -88,5 +88,17 @@ export const useUserStore = defineStore('userStore', () => {
     return true;
   };
 
-  return { loginUser, registrationNewUser, getToken, isAuth, logout  }
+  const me = async () => {
+    const token = getToken();
+
+    const { data } = await axios.get("/api/v1/auth/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    return data
+  }
+
+  return { loginUser, registrationNewUser, getToken, isAuth, logout, me  }
 })

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import BaseTitle from "@/components/UI/BaseTitle.vue";
+import BaseTitle from "@/components/BaseComponents/BaseTitle.vue";
 import {useMovieStore} from "@/stores/MovieStore.js";
 
 const movies = ref([]);
@@ -103,13 +103,10 @@ onMounted(() => {
         </div>
 
         <div class="screenings">
-          <div
-              v-for="screening in movie.screenings"
-              :key="screening.id"
-              class="screening-time"
-          >
-            {{ new Date(screening.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
-          </div>
+          <RouterLink class="screening-time" v-for="screening in movie.screenings" :key="screening.id" :to="`/movies/${movie.id}`">
+              {{ new Date(screening.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
+          </RouterLink>
+
         </div>
       </div>
     </div>
@@ -186,6 +183,7 @@ onMounted(() => {
   border-radius: 6px;
   cursor: pointer;
   transition: 0.3s;
+  color: var(--color-primary-text);
 }
 
 .screening-time:hover {

@@ -1,9 +1,9 @@
 <script setup>
-import BaseTitle from "@/components/UI/BaseTitle.vue";
-import BaseLoader from "@/components/UI/BaseLoader.vue";
+import BaseTitle from "@/components/BaseComponents/BaseTitle.vue";
+import BaseLoader from "@/components/BaseComponents/BaseLoader.vue";
 import { onMounted, ref } from "vue";
 import { useMovieStore } from "@/stores/MovieStore.js";
-import DefaultButton from "@/components/UI/DefaultButton.vue";
+import DefaultButton from "@/components/BaseComponents/DefaultButton.vue";
 
 const movieStore = useMovieStore();
 const movies = ref([]);
@@ -47,7 +47,7 @@ onMounted(async () => {
                   :key="genre.id"
                   class="genre"
               >
-                {{ genre.name }}
+                {{ genre }}
               </span>
             </div>
           </div>
@@ -133,38 +133,6 @@ onMounted(async () => {
   padding: 4px 8px;
   background: #f0f0f0;
   border-radius: 4px;
-}
-
-
-/* Адаптивность */
-@media (max-width: 1200px) {
-  .movie-card {
-    grid-column: span 6;
-  }
-
-  .movie-card:nth-child(n+4) {
-    grid-column: span 6;
-  }
-}
-
-@media (max-width: 768px) {
-  .movie-card {
-    grid-column: span 12;
-  }
-
-  .movie-card:nth-child(n+4) {
-    grid-column: span 12;
-  }
-
-  .card-title {
-    font-size: 20px;
-  }
-
-  .movie-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
 }
 
 .loading-message,
