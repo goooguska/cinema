@@ -4,41 +4,47 @@ namespace App\Http\Presenters\Api\Movie;
 
 class MoviePresenter
 {
-    public function __construct(private readonly array $movie) {}
+    public function __construct(private readonly array $movies) {}
 
-    public static function make(array $movie): array
+    public static function make(array $movies): array
     {
-        return (new self($movie))->present();
+        return (new self($movies))->present();
     }
 
     private function present(): array
     {
-        return [
-            'id' => $this->movie['id'],
-            'title' => $this->movie['title'] ?? 'Без названия',
-            'description' => $this->movie['description'] ?? 'Без описания',
-            'duration' => $this->movie['duration'],
-            'poster_url' => $this->movie['poster_url'],
-            'year' => $this->movie['year'],
-            'actors' => $this->presentList('actors'),
-            'directors' => $this->presentList('directors'),
-            'genres' => $this->presentNames('genres'),
-            'countries' => $this->presentNames('countries'),
-            'screenings' => $this->presentScreenings(),
-        ];
+
+        return array_map(function ($movie) {
+            return [
+                'id' => $movie['id'],
+                'title' => $movie['title'] ?? 'Без названия',
+                'description' => $movie['description'] ?? 'Без описания',
+                'duration' => $movie['duration'],
+                'poster_url' => $movie['poster_url'],
+                'year' => $movie['year'],
+                'actors' => $this->presentList($movie, 'actors'),
+                'directors' => $this->presentList($movie, 'directors'),
+                'genres' => $this->presentNames($movie, 'genres'),
+                'countries' => $this->presentNames($movie, 'countries'),
+                'screenings' => $this->presentScreenings($movie),
+            ];
+        }, $this->movies);
     }
 
-    private function presentList(string $key): array
+    private function presentList(array $movie, string $key): array
     {
-        return $this->movie[$key] ?? [];
+        return $movie[$key] ?? [];
     }
 
-    private function presentNames(string $key): array
+    private function presentNames(array $movie, string $key): array
     {
-        return array_map(fn ($item) => mb_ucfirst($item['name']), $this->movie[$key]);
+        return array_map(
+            fn ($item) => mb_ucfirst($item['name']),
+            $movie[$key] ?? []
+        );
     }
 
-    private function presentScreenings(): array
+    private function presentScreenings(array $movie): array
     {
         return array_map(
             fn($screening) => [
@@ -49,7 +55,7 @@ class MoviePresenter
                 'cinema' => $this->formatCinema($screening['hall']['cinema'] ?? []),
                 'price' => $screening['price'] ?? 0,
             ],
-            $this->movie['screenings'] ?? []
+            $movie['screenings'] ?? []
         );
     }
 
@@ -64,7 +70,7 @@ class MoviePresenter
     private function formatCinema(array $cinema): array
     {
         return [
-            'id' => $cinema['id'],
+            'id' => $cinema['id'] ?? 0,
             'name' => $cinema['name'] ?? 'Неизвестный кинотеатр',
             'address' => $this->formatAddress($cinema['address'] ?? ''),
         ];

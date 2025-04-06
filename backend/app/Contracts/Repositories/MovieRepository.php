@@ -10,4 +10,6 @@ interface MovieRepository
     public function getMovies(): Collection;
 
     public function findMovieById(int $id): ?Movie;
+
+    public function getDailyMovies(string $date): Collection;
 }

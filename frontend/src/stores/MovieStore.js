@@ -11,10 +11,15 @@ export const useMovieStore = defineStore('movieStore', () => {
 
   const getMovieById = async (movieId) => {
     const { data } = await axios.get(`/api/v1/movies/${movieId}`)
-    console.log(data)
 
     return data
   }
 
-  return { getAllMovies, getMovieById }
+  const getDailyMovies = async (date) => {
+    const { data } = await axios.get('/api/v1/movies/daily', { params: { date } });
+
+    return data
+  }
+
+  return { getAllMovies, getMovieById, getDailyMovies }
 })

@@ -19,6 +19,7 @@ $router->group(['prefix' => 'auth', 'namespace' => 'App\Http\Controllers\Api'], 
 
 $router->group(['prefix' => 'movies', 'namespace' => 'App\Http\Controllers\Api\Movie'], function (Router $router) {
     $router->get('/', 'ListController@allMovies');
+    $router->get('/daily', 'ListController@getDailyMovies');
     $router->get('/{id}', 'DetailController@getMovie');
 });
 

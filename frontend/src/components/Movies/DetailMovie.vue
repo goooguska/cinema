@@ -13,14 +13,18 @@ const movie = ref([]);
 const isLoading = ref(true);
 
 onMounted(async () => {
+  isLoading.value = true;
   try {
-    movie.value = await movieStore.getMovieById(props.id);
+    const movies = await movieStore.getMovieById(props.id);
+    movie.value = movies?.[0] || null;
   } catch (error) {
-    console.error("Ошибка загрузки фильма:", error);
+    console.error("Ошибка при загрузке фильма:", error);
+    movie.value = null;
   } finally {
     isLoading.value = false;
   }
 });
+
 </script>
 
 <template>

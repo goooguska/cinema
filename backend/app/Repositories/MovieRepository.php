@@ -24,6 +24,25 @@ class MovieRepository extends BaseRepository implements MovieRepositoryContract
             ->get();
     }
 
+    public function getDailyMovies(string $date): Collection
+    {
+        return $this->getModel()->newQuery()
+            ->whereHas('screenings', function ($query) use ($date) {
+                $query->whereDate('start_time', $date);
+            })
+            ->with(['screenings' => function ($query) use ($date) {
+                $query->whereDate('start_time', $date)
+                    ->orderBy('start_time');
+            }])
+            ->with([
+                'actors',
+                'directors',
+                'genres',
+                'countries',
+            ])
+            ->get();
+    }
+
     /**
      * @return TModel
      */

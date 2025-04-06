@@ -9,7 +9,9 @@ interface MovieService
 {
     public function getMovies(): Collection;
 
-    public function getMovieById(int $id): array;
+    public function getMovieById(int $id): ?Movie;
+
+    public function getDailyMovies(string $date): Collection;
 
     public function createMovie(array $fields): Movie;
 

@@ -7,6 +7,7 @@ import AccountPage from "@/views/AccountPage.vue";
 import DetailMovie from "@/components/Movies/DetailMovie.vue";
 import {useUserStore} from "@/stores/UserStore.js";
 import NotFoundPage from "@/views/NotFoundPage.vue";
+import axios from "axios";
 
 const routes = [
     {
@@ -52,6 +53,16 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
+
+axios.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response.status === 404) {
+            router.push({ name: 'NotFound' })
+        }
+        return Promise.reject(error)
+    }
+)
 
 router.beforeEach((to, from, next) => {
     const userStore = useUserStore()

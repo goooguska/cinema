@@ -128,6 +128,13 @@ const formatAddress = (address) => {
   margin-bottom: 0.5rem;
 }
 
+.screening-card:hover {
+  background: var(--color-primary-text);
+  color: white;
+  transition: 0.3s;
+
+}
+
 .screening-hall {
   color: var(--color-other-text);
   font-size: 14px;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Movie;
 use App\Contracts\Services\MovieService;
 use App\Http\Controllers\Controller;
 use App\Http\Presenters\Api\Movie\MoviePresenter;
+use Illuminate\Http\JsonResponse;
 
 class DetailController extends Controller
 {
@@ -14,6 +15,10 @@ class DetailController extends Controller
     {
         $movie = $this->movieService->getMovieById($movieId);
 
-        return MoviePresenter::make($movie);
+        if (empty($movie)) {
+            return new JsonResponse(['message' => 'Не найдено'], 404);
+        }
+
+        return MoviePresenter::make([$movie->toArray()]);
     }
 }
