@@ -15,7 +15,11 @@ const userStore = useUserStore();
 
 const seats = ref([]);
 const selectedSeats = ref(new Set());
-const totalPrice = computed(() => selectedSeats.value.size * props.screening.price);
+const totalPrice = computed(() => {
+  const num = props.screening.price.match(/\d+/);
+  const result = num ? parseInt(num[0], 10) : null;
+  return selectedSeats.value.size * result
+});
 
 const isSeatOccupied = (row, seatNumber) => {
   const globalSeatNumber = (row - 1) * 10 + seatNumber;
@@ -117,19 +121,23 @@ onMounted(loadSeats);
       </div>
 
     <div class="summary">
-      <p>Selected: {{ selectedSeats.size }}</p>
+      <p>Выбрано: {{ selectedSeats.size }}</p>
       <p>Total: {{ totalPrice }} ₽</p>
-      <DefaultButton class="button"
+      <DefaultButton class="pay-button button"
           @click="bookSeats"
           :disabled="selectedSeats.size === 0"
       >
-        Confirm Booking
+        Оформить билеты
       </DefaultButton>
     </div>
   </div>
 </template>
 
 <style scoped>
+.pay-button {
+  padding: 20px;
+  display: inline-block;
+}
 .seat-map {
   padding: 2rem;
   max-width: 1000px;
